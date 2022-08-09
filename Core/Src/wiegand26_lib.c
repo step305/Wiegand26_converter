@@ -86,8 +86,8 @@ uint8_t check_available_wiegand_code() {
 }
 
 void wiegand26_write_bit(uint8_t bit) {
-    GPIO_TypeDef* port = (bit == 0) ? wiegand26_state.port_D0 : wiegand26_state.port_D1;
-    uint16_t pin = (bit == 0) ? wiegand26_state.pin_D0 : wiegand26_state.pin_D1;
+    GPIO_TypeDef* port = (bit == 0) ? wiegand26_state.out_port_D0 : wiegand26_state.out_port_D1;
+    uint16_t pin = (bit == 0) ? wiegand26_state.out_pin_D0 : wiegand26_state.out_pin_D1;
 
     HAL_GPIO_WritePin(port, pin, GPIO_PIN_RESET);
     delay_us(wiegand26_state.us_timer, 80);
@@ -97,10 +97,14 @@ void wiegand26_write_bit(uint8_t bit) {
 
 void wiegand26_init(WiegandPins* config) {
     wiegand26_state.us_timer = config->us_timer;
-    wiegand26_state.port_D0 = config->port_D0;
-    wiegand26_state.port_D1 = config->port_D1;
-    wiegand26_state.pin_D0 = config->pin_D0;
-    wiegand26_state.pin_D1 = config->pin_D1;
+    wiegand26_state.in_port_D0 = config->in_port_D0;
+    wiegand26_state.in_port_D1 = config->in_port_D1;
+    wiegand26_state.in_pin_D0 = config->in_pin_D0;
+    wiegand26_state.in_pin_D1 = config->in_pin_D1;
+    wiegand26_state.out_port_D0 = config->out_port_D0;
+    wiegand26_state.out_port_D1 = config->out_port_D1;
+    wiegand26_state.out_pin_D0 = config->out_pin_D0;
+    wiegand26_state.out_pin_D1 = config->out_pin_D1;
 }
 
 void wiegand26_write(uint32_t cardID) {
@@ -126,10 +130,10 @@ void wiegand26_write(uint32_t cardID) {
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-    if(wiegand26_interrupt_enable && GPIO_Pin == wiegand26_state.pin_D0)	{
+    if(wiegand26_interrupt_enable && GPIO_Pin == wiegand26_state.in_pin_D0)	{
         wiegand_read_D0();
     }
-    else if(wiegand26_interrupt_enable && GPIO_Pin == wiegand26_state.pin_D1) {
+    else if(wiegand26_interrupt_enable && GPIO_Pin == wiegand26_state.in_pin_D1) {
         wiegand_read_D1();
     }
 }

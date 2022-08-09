@@ -26,19 +26,27 @@
 #include "main.h"
 
 typedef struct {
-    GPIO_TypeDef* port_D0;
-    GPIO_TypeDef* port_D1;
-    uint16_t pin_D0;
-    uint16_t pin_D1;
+    GPIO_TypeDef* in_port_D0;
+    GPIO_TypeDef* in_port_D1;
+    uint16_t in_pin_D0;
+    uint16_t in_pin_D1;
+    GPIO_TypeDef* out_port_D0;
+    GPIO_TypeDef* out_port_D1;
+    uint16_t out_pin_D0;
+    uint16_t out_pin_D1;
     TIM_HandleTypeDef* us_timer;
 } WiegandPins;
 
 typedef struct {
     TIM_HandleTypeDef* us_timer;
-    GPIO_TypeDef* port_D0;
-    GPIO_TypeDef* port_D1;
-    uint16_t pin_D0;
-    uint16_t pin_D1;
+    GPIO_TypeDef* in_port_D0;
+    GPIO_TypeDef* in_port_D1;
+    uint16_t in_pin_D0;
+    uint16_t in_pin_D1;
+    GPIO_TypeDef* out_port_D0;
+    GPIO_TypeDef* out_port_D1;
+    uint16_t out_pin_D0;
+    uint16_t out_pin_D1;
     __IO uint32_t cardH;
     __IO uint32_t cardL;
     __IO uint32_t recent_timestamp;
@@ -48,6 +56,7 @@ typedef struct {
 } Wiegand26State;
 
 extern volatile uint8_t wiegand26_interrupt_enable;
+extern Wiegand26State wiegand26_state;
 
 void wiegand26_init(WiegandPins* config);
 void wiegand26_write(uint32_t cardID);

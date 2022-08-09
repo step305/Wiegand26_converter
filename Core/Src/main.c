@@ -110,10 +110,14 @@ int main(void)
 
     WiegandPins wiegand_pins_config;
 
-    wiegand_pins_config.pin_D0 = OUT1_D0_Pin;
-    wiegand_pins_config.port_D0 = OUT2_D0_GPIO_Port;
-    wiegand_pins_config.pin_D1 = OUT1_D1_Pin;
-    wiegand_pins_config.port_D1 = OUT2_D1_GPIO_Port;
+    wiegand_pins_config.out_pin_D0 = OUT2_D0_Pin;
+    wiegand_pins_config.out_port_D0 = OUT2_D0_GPIO_Port;
+    wiegand_pins_config.out_pin_D1 = OUT2_D1_Pin;
+    wiegand_pins_config.out_port_D1 = OUT2_D1_GPIO_Port;
+    wiegand_pins_config.in_pin_D0 = INP_D0_Pin;
+    wiegand_pins_config.in_port_D0 = INP_D0_GPIO_Port;
+    wiegand_pins_config.in_pin_D1 = INP_D1_Pin;
+    wiegand_pins_config.in_port_D1 = INP_D1_GPIO_Port;
     wiegand_pins_config.us_timer = &htim1;
     wiegand26_init(&wiegand_pins_config);
     HAL_TIM_Base_Start(&htim1);
